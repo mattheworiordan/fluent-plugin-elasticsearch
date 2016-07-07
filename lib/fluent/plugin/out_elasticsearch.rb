@@ -231,7 +231,7 @@ class Fluent::ElasticsearchOutput < Fluent::BufferedOutput
           record['@timestamp'] = record[@time_key] unless time_key_exclude_timestamp
         else
           dt = Time.at(time).to_datetime
-          record.merge!({"@timestamp" => dt.to_s})
+          record.merge!({ "@timestamp" => dt.strftime("%Y-%m-%dT%H:%M:%S.%3N%z") })
         end
         dt = dt.new_offset(0) if @utc_index
         target_index = "#{@logstash_prefix}-#{dt.strftime(@logstash_dateformat)}"
