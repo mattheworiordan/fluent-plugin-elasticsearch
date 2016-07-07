@@ -171,7 +171,7 @@ class Fluent::ElasticsearchOutput < Fluent::BufferedOutput
   end
 
   def format(tag, time, record)
-    [tag, time, record].to_msgpack
+    [tag, Time.at(time.to_r).to_f, record].to_msgpack
   end
 
   def shutdown
